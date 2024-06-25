@@ -12,6 +12,8 @@ public class ThreadP3 {
 		
 		Demo24 t1=new Demo24();
 		Demo24 t2=new Demo24();
+		t1.setName("Welcome");
+		t1.setPriority(Thread.MAX_PRIORITY);
 		t1.start();
 		t2.start();
 
