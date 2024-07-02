@@ -58,6 +58,12 @@ public class HomePage extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("AdminLogin");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				new AdminLogin().setVisible(true);
+			}
+		});
 		btnNewButton_1.setBounds(254, 163, 185, 29);
 		contentPane.add(btnNewButton_1);
 		
