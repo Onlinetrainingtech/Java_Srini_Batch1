@@ -5,3 +5,8 @@ create table adminlogin(adminname varchar(100),adminpwd varchar(100));
 insert into adminlogin values('admin','admin@123');
 
 select * from adminlogin;
+
+
+create table product(pid varchar(100),pname varchar(100),pprice varchar(100));
+
+select * from product;

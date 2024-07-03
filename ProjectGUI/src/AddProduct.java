@@ -4,8 +4,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
 
 public class AddProduct extends JFrame {
 
@@ -75,18 +82,128 @@ public class AddProduct extends JFrame {
 		textField_2.setColumns(10);
 		
 		JButton btnNewButton = new JButton("AddProduct");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				try
+				{
+					String pid=textField.getText();
+					String pname=textField_1.getText();
+					String pprice=textField_2.getText();
+					//int pid=Integer.parseInt(textField.getText());
+					
+					String str1="insert into product values('"+pid+"','"+pname+"','"+pprice+"')";
+					 // Load MySQL JDBC Driver
+				    Class.forName("com.mysql.cj.jdbc.Driver");
+
+				    // Establish connection to the MySQL database
+				    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mrgusjava", "root", "root");
+				    
+					Statement stmt=conn.createStatement();
+					
+					stmt.executeUpdate(str1);
+					
+					JOptionPane.showMessageDialog(btnNewButton,"InsertedValue");
+				}
+				catch(Exception t)
+				{
+					System.out.println(t);
+				}
+			}
+		});
 		btnNewButton.setBounds(26, 325, 85, 21);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Search");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				try
+				{
+					String pid=textField.getText();
+					String str1="select * from product where pid='"+pid+"'";
+					 // Load MySQL JDBC Driver
+				    Class.forName("com.mysql.cj.jdbc.Driver");
+
+				    // Establish connection to the MySQL database
+				    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mrgusjava", "root", "root");
+				    
+					Statement stmt=conn.createStatement();
+					
+					ResultSet rs=stmt.executeQuery(str1);
+					rs.next();
+					String r1=rs.getString(2);
+					String r2=rs.getString(3);
+					
+					textField_1.setText(r1);
+					textField_2.setText(r2);
+					
+					JOptionPane.showMessageDialog(btnNewButton_1,"Searching..");
+				}
+				catch(Exception t)
+				{
+					
+				}
+			}
+		});
 		btnNewButton_1.setBounds(194, 325, 85, 21);
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Update");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				try
+				{
+					String pid=textField.getText();
+					String pname=textField_1.getText();
+					String str1="update product set pname='"+pname+"' where pid='"+pid+"'";
+					 // Load MySQL JDBC Driver
+				    Class.forName("com.mysql.cj.jdbc.Driver");
+
+				    // Establish connection to the MySQL database
+				    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mrgusjava", "root", "root");
+				    
+					Statement stmt=conn.createStatement();
+					
+					stmt.executeUpdate(str1);
+					JOptionPane.showMessageDialog(btnNewButton_2,"Updated..");
+				}
+				catch(Exception t)
+				{
+					
+				}
+			}
+		});
 		btnNewButton_2.setBounds(355, 325, 85, 21);
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Delete");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				try
+				{
+					String pid=textField.getText();
+					String str1="delete from product where pid='"+pid+"'";
+					 // Load MySQL JDBC Driver
+				    Class.forName("com.mysql.cj.jdbc.Driver");
+
+				    // Establish connection to the MySQL database
+				    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mrgusjava", "root", "root");
+				    
+					Statement stmt=conn.createStatement();
+					
+					stmt.executeUpdate(str1);
+					JOptionPane.showMessageDialog(btnNewButton_3,"deleted..");
+					
+				}
+				catch(Exception t)
+				{
+					
+				}
+			}
+		});
 		btnNewButton_3.setBounds(448, 252, 85, 21);
 		contentPane.add(btnNewButton_3);
 	}
